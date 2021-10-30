@@ -5,6 +5,7 @@ import Seo from "../components/seo"
 
 const IndexPage = () => {
   const [status, setStatus] = React.useState("")
+  const [audioUrl, setAudioUrl] = React.useState("")
 
   const onDrop = React.useCallback(acceptedFiles => {
     // Do something with the files
@@ -18,13 +19,33 @@ const IndexPage = () => {
       method: "post",
       body: data,
     })
-      .then(() => {
-        setStatus("It worked! Upload successful")
+      .then(async res => {
+        setStatus("File selected")
+        setAudioUrl(await res.json().url)
       })
       .catch(() => {
         setStatus("Shit, it failed! Oh well")
       })
   }, [])
+
+  const [name, setName] = React.useState("")
+
+  const onClickSend = function () {
+    const body = JSON.stringify({ name: name, audioUrl: audioUrl })
+
+    setStatus("Sending...")
+    fetch("https://nodeproxymys.herokuapp.com/api/kamp-koloma", {
+      method: "post",
+      body: body,
+    })
+      .then(async res => {
+        setStatus("It worked! Upload successful")
+      })
+      .catch(() => {
+        setStatus("Shit, it failed! Oh well")
+      })
+  }
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
@@ -33,13 +54,28 @@ const IndexPage = () => {
       <h1>Hi people</h1>
       <p>This is where you upload audio for Kamp Koloma</p>
       <p>Please make sure the file is an audio file</p>
-
+      <input
+        placeholder="name"
+        onChange={e => {
+          setName(e.target.value)
+        }}
+      />
+      <br />
+      <br />
+      <input
+        placeholder="URL (optional)"
+        onChange={e => {
+          setAudioUrl(e.target.value)
+        }}
+      />
+      <br />
       <div {...getRootProps()}>
         <input {...getInputProps()} />
         {isDragActive ? (
           <p>Drop the files here ...</p>
         ) : (
           <p>
+            <br />
             <span style={{ borderStyle: "dashed", borderWidth: 2 }}>
               Drag 'n' drop some files here
             </span>
@@ -50,6 +86,7 @@ const IndexPage = () => {
           </p>
         )}
       </div>
+      <button onClick={onClickSend}>UPLOAD</button>
       {/* <p>
       <Link to="/page-2/">Go to page 2</Link> <br />
       <Link to="/using-typescript/">Go to "Using TypeScript"</Link> <br />
