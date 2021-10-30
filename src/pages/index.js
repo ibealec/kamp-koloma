@@ -36,6 +36,10 @@ const IndexPage = () => {
     setStatus("Sending...")
     fetch("https://nodeproxymys.herokuapp.com/api/kamp-korals", {
       method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       body: body,
     })
       .then(async res => {
