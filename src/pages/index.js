@@ -21,7 +21,11 @@ const IndexPage = () => {
     })
       .then(async res => {
         setStatus("File selected")
-        setAudioUrl(await res.json().url)
+        const file = await res.json()[0]
+
+        const url = file.url
+        console.log("urllll", file.url)
+        setAudioUrl(url)
       })
       .catch(() => {
         setStatus("Shit, it failed! Oh well")
