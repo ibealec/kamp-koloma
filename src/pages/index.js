@@ -10,7 +10,7 @@ const IndexPage = () => {
   const onDrop = React.useCallback(acceptedFiles => {
     // Do something with the files
     console.log("A", acceptedFiles)
-    setStatus("Uploading...")
+    setStatus("Selecting file...")
     const data = new FormData()
     data.append("file", acceptedFiles[0])
     data.append("upload_preset", "pqsibowt")
@@ -21,8 +21,7 @@ const IndexPage = () => {
     })
       .then(async res => {
         setStatus("File selected")
-        const file = await res.json()[0]
-
+        const file = await res.json()
         const url = file.url
         console.log("urllll", file.url)
         setAudioUrl(url)
