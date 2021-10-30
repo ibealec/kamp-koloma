@@ -34,7 +34,7 @@ const IndexPage = () => {
     const body = JSON.stringify({ name: name, audioUrl: audioUrl })
 
     setStatus("Sending...")
-    fetch("https://nodeproxymys.herokuapp.com/api/kamp-koloma", {
+    fetch("https://nodeproxymys.herokuapp.com/api/kamp-korals", {
       method: "post",
       body: body,
     })
