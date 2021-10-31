@@ -1,3 +1,4 @@
+import { Link } from "gatsby"
 import * as React from "react"
 import { useDropzone } from "react-dropzone"
 import Layout from "../components/layout"
@@ -58,6 +59,9 @@ const IndexPage = () => {
   return (
     <Layout>
       <Seo title="Home" />
+      <div style={{ marginBottom: 80 }}>
+        <Link to="/sounds">Soundboard</Link>
+      </div>
       <h1>Hi people</h1>
       <p>This is where you upload audio for Kamp Koloma</p>
       <p>Please make sure the file is an audio file</p>
